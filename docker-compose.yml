@@ -16,18 +16,18 @@ services:
 
   frontend:
     build: ./client
-    container_name: frontend
+    container_name: frontend_app
     ports:
       - "3000:3000"
     volumes:
-      - ./client:/frontend
-      - ./frontend/node_modules
+      - ./client:/frontend_app
+      - ./frontend_app/node_modules
 
   backend:
     build: ./server
-    container_name: backend
+    container_name: backend_app
     ports:
       - "5001:5001"
     volumes:
-      - ./server:/backend
-      - ./backend/node_modules
+      - ./server:/backend_app
+      - ./backend_app/node_modules
