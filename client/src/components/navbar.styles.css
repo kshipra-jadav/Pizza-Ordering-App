@@ -1,0 +1,35 @@
+.navbar {
+    background-color: #ee3a43;
+    width: 100vw;
+    height: 120px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+}
+
+.logo {
+    width: 100px;
+    height: 100px;
+    margin-top: 10px;
+}
+
+.logo-title {
+    margin-top: 10px;
+    font-size: 4rem;
+}
+
+.pic {
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
+.profilepic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}

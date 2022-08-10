@@ -1,12 +1,16 @@
-import React from 'react';
-import './App.css';
+import React, { useEffect } from 'react'
+import './App.css'
+import Navbar from "./components/Navbar"
 
 function App() {
-  return (
-      <>
-        <h1>Pizza Ordering App</h1>
-      </>
-  )
+	useEffect(() => {
+		document.title = "PizzFlux | Pizza Ordering App"
+	}, [])
+	return (
+		<>
+			<Navbar />
+		</>
+	)
 }
 
-export default App;
+export default App
