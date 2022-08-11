@@ -1,0 +1,32 @@
+.text-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-top: -10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.vegIcon {
+    height: 20px;
+    width: 20px;
+}
+
+.price {
+    font-size: 1.5rem;
+}
+
+.desc {
+    font-size: 1.1rem;
+}
+
+.dropdown {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
