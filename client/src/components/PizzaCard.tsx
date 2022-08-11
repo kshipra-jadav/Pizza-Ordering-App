@@ -3,46 +3,50 @@ import { Button, Card, Checkbox, Col, Dropdown, Menu, MenuProps } from "antd"
 import 'antd/dist/antd.css'
 import { ShoppingCartOutlined } from "@ant-design/icons"
 import Select, { Options } from "react-select"
+import axios from "axios"
 
 import { Pizza } from "../types/Pizza"
 import "./pizzacard.styles.css"
 import veg from "../assets/veg.jpg"
 import non_veg from "../assets/non veg.png"
+import { Ingredient } from "../types/Ingredient"
+import { Topping } from "../types/Topping"
 
 interface PizzaCardProps {
 	item: Pizza
+	ingredients: Ingredient[]
 }
 
-const PizzaCard: FC<PizzaCardProps> = ({ item }): JSX.Element => {
+const PizzaCard: FC<PizzaCardProps> = ({ item, ingredients }): JSX.Element => {
 	const [ price, setPrice ] = useState(0)
-	const [ pizzaDesc, setPizzaDesc ] = useState([])
 	const [ total, setTotal ] = useState(0)
+	const [ toppings, setToppings ] = useState<Topping[]>([])
+	const [ pizza, setPizza ] = useState("")
+	
 	
 	useEffect(() => {
 		setPrice(item.price)
+		setPizza(item.name)
 	}, [])
 	
-	
-	const ingredients = [
-		{ value: "Onion", label: "Onion - 20₹", id: 1, pizza: item.name, additionalCost: 20 },
-		{ value: "Capsicum", label: "Capsicum - 10₹", id: 2, pizza: item.name, additionalCost: 10 },
-		{ value: "Olives", label: "Olives - 30₹", id: 3, pizza: item.name, additionalCost: 30 },
-		{ value: "Baby Corn", label: "Baby Corn - 50₹", id: 4, pizza: item.name, additionalCost: 50 },
-		{ value: "Jalapenos", label: "Jalapenos - 20₹", id: 5, pizza: item.name, additionalCost: 20 },
-	]
 	
 	
 	const handleSelect = (option: any) => {
 		let total = 0
+		let finalToppings: Topping[] = []
 		option.forEach((item: any) => {
 			total += item.additionalCost
+			finalToppings.push(item.value)
 		})
 		setTotal(total)
-		setPizzaDesc(option)
+		setToppings(finalToppings)
 	}
 	
-	const handleBtnClick = (e: MouseEvent<HTMLButtonElement>) => {
-		const toppings = []
+	const addToCart = (e: MouseEvent<HTMLButtonElement>) => {
+		console.log(`Pizza Taken :- ${pizza}`)
+		console.log(`Toppings Total :- ${total}`)
+		console.log(`Ingredients :- ${JSON.stringify(toppings)}`)
+		console.log(`Total Prize of Pizza :- ${price + total}`)
 		
 	}
 	
@@ -84,7 +88,7 @@ const PizzaCard: FC<PizzaCardProps> = ({ item }): JSX.Element => {
 							/>
 						</div>
 						<Button type="ghost" shape="round" icon={ <ShoppingCartOutlined/> } size={ 'large' }
-						        onClick={ handleBtnClick }/>
+						        onClick={ addToCart }/>
 					</div>
 				
 				</Card>
