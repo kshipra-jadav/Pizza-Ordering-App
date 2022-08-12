@@ -1,8 +1,11 @@
-import { FC } from "react"
-import { Button, Form, Input } from "antd"
+import { FC, useState } from "react"
+import { Alert, Button, Form, Input } from "antd"
 import axios from "axios"
 
 const SignIn: FC = (): JSX.Element => {
+	const [ success, setSuccess ] = useState(false)
+	const [ error, setError ] = useState(false)
+	const [ errorDesc, setErrorDesc ] = useState("")
 	
 	const [ form ] = Form.useForm()
 	
@@ -11,23 +14,37 @@ const SignIn: FC = (): JSX.Element => {
 		form.resetFields()
 		
 		try {
-			const { data } = await axios.get(`http://localhost:5001/api/users/${ email }`)
-			if (data) {
-				console.log(data)
-			} else {
-				console.log('user not found')
-			}
-		} catch (e) {
-			console.log(e)
+			const { data } = await axios.post('http://localhost:5001/api/users/authUser', { email, password })
+			setSuccess(true)
+		} catch (e: any) {
+			setErrorDesc(e.response.data)
+			setError(true)
+			
 		}
 	}
 	return (
 		<>
 			<div className="head" style={ { backgroundColor: "#fefae0" } }>
 				Sign In Into Your Account!
+				{ success && <Alert
+						message="Success!"
+						description="You're A Valid User!"
+						type="success"
+						showIcon
+						style={ { width: "50%" } }
+				/>
+				}
+				{ error && <Alert
+						message="Login Error"
+						description={errorDesc}
+						type="error"
+						showIcon
+						style={ { width: "50%" } }
+				/>
+				}
 			</div>
-			<div className="form" style={ { backgroundColor: "#fefae0" } }>
-				<Form labelCol={ { span: 10 } } wrapperCol={ { span: 50 } } onFinish={ handleFinish } form={form}>
+			<div className="form" style={ { backgroundColor: "#fefae0", marginTop: "-50px" } }>
+				<Form labelCol={ { span: 10 } } wrapperCol={ { span: 50 } } onFinish={ handleFinish } form={ form }>
 					<Form.Item
 						name="email"
 						label="Email"
@@ -40,7 +57,7 @@ const SignIn: FC = (): JSX.Element => {
 						] }
 						hasFeedback
 					>
-						<Input placeholder="Enter Your Email"/>
+						<Input placeholder="Enter Your Email" />
 					</Form.Item>
 					
 					<Form.Item
