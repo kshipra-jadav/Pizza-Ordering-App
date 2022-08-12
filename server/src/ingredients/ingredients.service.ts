@@ -1,20 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from "@nestjs/sequelize"
-import { Ingredients } from "./ingredients.model"
+import { IngredientType, Ingredients } from "./ingredients.model"
+import { Repository, Sequelize } from "sequelize-typescript"
 
 @Injectable()
 export class IngredientsService {
-	constructor(
-		@InjectModel(Ingredients)
-		private ingredientModel: typeof Ingredients
-	) {}
+	repository: Repository<Ingredients>
+	constructor(sequelize: Sequelize) {
+		this.repository = sequelize.getRepository(Ingredients)
+	}
 	
+	async createOne(ingredient: IngredientType): Promise<Ingredients> {
+		return await this.repository.create(ingredient)
+	}
 	async findAll(): Promise<Ingredients[]> {
-		return this.ingredientModel.findAll()
+		return await this.repository.findAll()
 	}
 	
-	async createOne(ingredient: Ingredients): Promise<Ingredients> {
-		//@ts-ignore
-		return this.ingredientModel.create(ingredient)
-	}
 }

@@ -25,7 +25,7 @@ const Pizzas: FC = (): JSX.Element => {
 	return (
 		<>
 			
-			<Row gutter={[5, 30]} style={{backgroundColor: "#fefae0"}}>
+			<Row gutter={[5, 30]}>
 				{
 					items.map(item => {
 						return <PizzaCard item={item} key={item.id} ingredients={ingredients} />
