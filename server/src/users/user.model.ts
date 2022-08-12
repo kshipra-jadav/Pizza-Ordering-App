@@ -17,7 +17,7 @@ export class User extends Model {
 	email: string
 	
 	@Column
-	phoneNumber: number
+	phoneNumber: string
 	
 	@Column
 	address: string
