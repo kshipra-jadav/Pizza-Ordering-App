@@ -20,6 +20,7 @@ export class UsersService {
 	
 	async createUser(user: User): Promise<User> {
 		return await this.repository.create(user)
+		
 	}
 	
 	async findByEmail(email: string): Promise<User> {

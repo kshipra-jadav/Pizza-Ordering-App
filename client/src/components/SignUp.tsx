@@ -55,7 +55,7 @@ const SignUp: FC = (): JSX.Element => {
 				}
 			</div>
 			<div className="form" style={ { backgroundColor: "#fefae0" } }>
-				<Form labelCol={ { span: 10 } } wrapperCol={ { span: 50 } } onFinish={ handleFinish } form={form}>
+				<Form labelCol={ { span: 10 } } wrapperCol={ { span: 50 } } onFinish={ handleFinish } form={ form }>
 					<Form.Item
 						label={ "Full Name" }
 						name={ "fullName" }
