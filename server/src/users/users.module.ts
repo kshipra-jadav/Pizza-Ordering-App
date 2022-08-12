@@ -4,6 +4,7 @@ import { UsersService } from './users.service'
 import { SequelizeModule } from "@nestjs/sequelize"
 import { User } from "./user.model"
 import { HashPasswordMiddleware } from "./hash-password.middleware"
+import { AuthorizeUserMiddleware } from "./authorizeUser.middleware"
 
 @Module({
 	imports: [ SequelizeModule.forFeature([ User ]) ],
@@ -15,6 +16,12 @@ export class UsersModule implements NestModule {
 		consumer.apply(HashPasswordMiddleware)
 			.forRoutes({
 				path: 'users/create',
+				method: RequestMethod.POST
+			})
+		
+		consumer.apply(AuthorizeUserMiddleware)
+			.forRoutes({
+				path: "users/authUser",
 				method: RequestMethod.POST
 			})
 	}
