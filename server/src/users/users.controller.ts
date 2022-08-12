@@ -10,8 +10,7 @@ export class UsersController {
 	async createUser(@Body() user: User) {
 		return await this.userService.createUser(user)
 	}
-	
-	@Get('/:id')
+	@Get('/id/:id')
 	async getUserById(@Param('id', ParseIntPipe) id: number) {
 		return await this.userService.findById(id)
 	}
@@ -20,4 +19,6 @@ export class UsersController {
 	async getUserByEmail(@Param('email') email: string) {
 		return await this.userService.findByEmail(email)
 	}
+	
+	
 }

@@ -10,10 +10,10 @@ export class UsersService {
 		this.repository = sequelize.getRepository(User)
 	}
 	
-	async findById(id: number): Promise<User> {
+	async findById(userId: number): Promise<User> {
 		return await this.repository.findOne({
 			where: {
-				id
+				userId
 			}
 		})
 	}
