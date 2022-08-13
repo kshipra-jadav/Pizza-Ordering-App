@@ -38,6 +38,19 @@ export class UsersController {
 		return {msg: "My Cart"}
 	}
 	
+	@UseGuards(JwtAuthGuard)
+	@Get('/:email')
+	async getUserByEmail(@Param('email') email: string) {
+		const user = await this.userService.findByEmail(email)
+		return {
+			fullName: user.fullName,
+			email: user.email,
+			phoneNumber: user.phoneNumber,
+			address: user.address,
+			imgUrl: user.imageUrl
+		}
+	}
+	
 	@Get('/id/:id')
 	async getUserById(@Param('id', ParseIntPipe) id: number) {
 		return await this.userService.findById(id)
