@@ -22,4 +22,7 @@ export class User extends Model {
 	@Column
 	address: string
 	
+	@Column
+	imageUrl: string
+	
 }

@@ -1,19 +1,19 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common'
+import { JwtModule } from "@nestjs/jwt"
+import { JwtStrategy } from "./jwt.strategy"
+import { SequelizeModule } from "@nestjs/sequelize"
+
 import { UsersController } from './users.controller'
 import { UsersService } from './users.service'
-import { SequelizeModule } from "@nestjs/sequelize"
 import { User } from "./user.model"
 import { HashPasswordMiddleware } from "./hash-password.middleware"
 import { AuthorizeUserMiddleware } from "./authorizeUser.middleware"
 import { CreateJWTMiddleware } from "./createJWT.middleware"
-import { JwtModule } from "@nestjs/jwt"
-import { JwtStrategy } from "./jwt.strategy"
+import { GenerateImageMiddleware } from "./generateImage.middleware"
 
 import * as dotenv from 'dotenv'
 
 dotenv.config()
-
-
 
 @Module({
 	imports: [ SequelizeModule.forFeature([ User ]), JwtModule.register({
@@ -28,6 +28,12 @@ export class UsersModule implements NestModule {
 		consumer.apply(HashPasswordMiddleware)
 			.forRoutes({
 				path: 'users/create',
+				method: RequestMethod.POST
+			})
+		
+		consumer.apply(GenerateImageMiddleware)
+			.forRoutes({
+				path: "users/create",
 				method: RequestMethod.POST
 			})
 		

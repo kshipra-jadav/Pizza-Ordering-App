@@ -19,7 +19,6 @@ export class UsersController {
 		return req.body.access_token
 	}
 	
-	
 	@UseGuards(JwtAuthGuard)
 	@Get('/mycart')
 	async getMyCart() {
