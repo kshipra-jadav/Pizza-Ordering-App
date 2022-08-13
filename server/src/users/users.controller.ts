@@ -1,4 +1,15 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Req, UseGuards } from '@nestjs/common'
+import {
+	Body,
+	Controller,
+	Get,
+	HttpException,
+	HttpStatus,
+	Param,
+	ParseIntPipe,
+	Post,
+	Req,
+	UseGuards
+} from '@nestjs/common'
 import { UsersService } from "./users.service"
 import { User } from "./user.model"
 import { oneUser } from "./oneUser.type"
@@ -11,7 +22,9 @@ export class UsersController {
 	
 	@Post('/create')
 	async createUser(@Body() user: User) {
-		return await this.userService.createUser(user)
+		const usr = await this.userService.createUser(user)
+		if(usr) return {msg: "User Created"}
+		else return new HttpException("Something went wrong in creating the user", HttpStatus.BAD_REQUEST)
 	}
 	
 	@Post('/authUser')

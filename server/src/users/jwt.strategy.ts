@@ -20,10 +20,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 	
 	async validate(payload: any) {
 		const user: User = await this.userService.findById(payload.userId)
-		const { fullName, email, phoneNumber, address } = user.toJSON()
-		const finalPayload = { fullName, email, phoneNumber, address }
+		const { fullName, email, phoneNumber, address, imageUrl } = user.toJSON()
 		
-		console.log(finalPayload)
-		return payload
+		return { fullName, email, phoneNumber, address, imageUrl }
 	}
 }
