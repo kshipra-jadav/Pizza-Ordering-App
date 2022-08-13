@@ -1,4 +1,5 @@
 import { FC, useState, MouseEvent, MouseEventHandler, useEffect, useContext } from "react"
+import axios from "axios"
 
 import "./navbar.styles.css"
 import logo from "../assets/logo.png"
@@ -13,85 +14,93 @@ const Navbar: FC = (): JSX.Element => {
 	
 	const { loggedIn, setLoggedIn }: any = useContext(UserContext)
 	
+	if(loggedIn) {
 	
-	useEffect(() => {
-		if (loggedIn) {
-			let myItems = [
-				{
-					key: '1',
-					label: (
-						"Kshipra Jadav"
-					),
-					disabled: true
-				},
-				{
-					type: "divider"
-				},
-				{
-					key: '2',
-					label: (
-						<a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-							Your Account
-						</a>
-					),
-				},
-				{
-					type: "divider"
-				},
-				{
-					key: '3',
-					label: (
-						<a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
-							Your Cart
-						</a>
-					),
-				},
-				{
-					type: "divider"
-				},
-				{
-					key: '4',
-					label: (
-						<a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
-							Previous Orders
-						</a>
-					),
-				},
-			]
-			setMenuItems(myItems)
-		} else {
-			let myItems = [
-				{
-					key: '1',
-					label: (
-						"You Are Not Signed In"
-					),
-					disabled: true
-				},
-				{
-					type: "divider"
-				},
-				{
-					key: '2',
-					label: ( <Link to={ "/signIn" }> Sign In If You Already Have An Account </Link> )
-				},
-				{
-					type: "divider"
-				},
-				{
-					key: '3',
-					label: ( <Link to={ "/signUp" }>Sign Up To Make An Account</Link> )
-				}
-			]
-			setMenuItems(myItems)
+	}
+	
+	// TODO - Add Type Declaration
+	const loggedInItems: any = [
+		{
+			key: '1',
+			label: (
+				"Kshipra Jadav"
+			),
+			disabled: true
+		},
+		{
+			type: "divider"
+		},
+		{
+			key: '2',
+			label: (
+				<a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+					Your Account
+				</a>
+			),
+		},
+		{
+			type: "divider"
+		},
+		{
+			key: '3',
+			label: (
+				<a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
+					Your Cart
+				</a>
+			),
+		},
+		{
+			type: "divider"
+		},
+		{
+			key: '4',
+			label: (
+				<a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
+					Previous Orders
+				</a>
+			),
+		},
+		{
+			type: "divider"
+		},
+		{
+			key: '5',
+			label: (
+				<Link to={'/pizzas'} > Order Pizza! </Link>
+			),
+		},
+	]
+	const loggedOutItems: any = [
+		{
+			key: '1',
+			label: (
+				"You Are Not Signed In"
+			),
+			disabled: true
+		},
+		{
+			type: "divider"
+		},
+		{
+			key: '2',
+			label: ( <Link to={ "/signIn" }> Sign In If You Already Have An Account </Link> )
+		},
+		{
+			type: "divider"
+		},
+		{
+			key: '3',
+			label: ( <Link to={ "/signUp" }>Sign Up To Make An Account</Link> )
 		}
-	}, [])
+	]
+	
+	
 	const menu = (
 		<Menu
-			items={menuItems}
+			items={loggedIn ? loggedInItems : loggedOutItems}
 			style={{
 				width: "300px",
-				height: "160px",
+				height: "200px",
 				textAlign: "center"
 			}}
 		/>
