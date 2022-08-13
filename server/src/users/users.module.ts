@@ -5,11 +5,23 @@ import { SequelizeModule } from "@nestjs/sequelize"
 import { User } from "./user.model"
 import { HashPasswordMiddleware } from "./hash-password.middleware"
 import { AuthorizeUserMiddleware } from "./authorizeUser.middleware"
+import { CreateJWTMiddleware } from "./createJWT.middleware"
+import { JwtModule } from "@nestjs/jwt"
+import { JwtStrategy } from "./jwt.strategy"
+
+import * as dotenv from 'dotenv'
+
+dotenv.config()
+
+
 
 @Module({
-	imports: [ SequelizeModule.forFeature([ User ]) ],
+	imports: [ SequelizeModule.forFeature([ User ]), JwtModule.register({
+		secret: process.env.JWT_SECRET,
+		signOptions: { expiresIn: "60s" }
+	}) ],
 	controllers: [ UsersController ],
-	providers: [ UsersService ]
+	providers: [ UsersService, JwtStrategy ]
 })
 export class UsersModule implements NestModule {
 	configure(consumer: MiddlewareConsumer): any {
@@ -20,6 +32,11 @@ export class UsersModule implements NestModule {
 			})
 		
 		consumer.apply(AuthorizeUserMiddleware)
+			.forRoutes({
+				path: "users/authUser",
+				method: RequestMethod.POST
+			})
+		consumer.apply(CreateJWTMiddleware)
 			.forRoutes({
 				path: "users/authUser",
 				method: RequestMethod.POST
