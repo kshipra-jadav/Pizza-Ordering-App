@@ -1,4 +1,4 @@
-import { FC, useState, MouseEvent, MouseEventHandler, useEffect } from "react"
+import { FC, useState, MouseEvent, MouseEventHandler, useEffect, useContext } from "react"
 
 import "./navbar.styles.css"
 import logo from "../assets/logo.png"
@@ -6,10 +6,14 @@ import dp from "../assets/dp but jpeg.jpg"
 import empty from "../assets/empty.webp"
 import { Button, Dropdown, Menu } from "antd"
 import { Link } from "react-router-dom"
+import UserContext from "../UserContext"
 
 const Navbar: FC = (): JSX.Element => {
-	const [ loggedIn, setLoggedIn ] = useState(false)
 	const [ menuItems, setMenuItems ] = useState<any>([]) // sorry :P
+	
+	const { loggedIn, setLoggedIn }: any = useContext(UserContext)
+	
+	
 	useEffect(() => {
 		if (loggedIn) {
 			let myItems = [

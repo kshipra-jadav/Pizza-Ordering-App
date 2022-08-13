@@ -1,6 +1,7 @@
-import { FC, useState } from "react"
+import { FC, useContext, useState } from "react"
 import { Alert, Button, Form, Input } from "antd"
 import axios from "axios"
+import UserContext from "../UserContext"
 
 const SignIn: FC = (): JSX.Element => {
 	const [ success, setSuccess ] = useState(false)
@@ -9,12 +10,16 @@ const SignIn: FC = (): JSX.Element => {
 	
 	const [ form ] = Form.useForm()
 	
+	const { loggedIn, setLoggedIn }: any = useContext(UserContext)
+	
 	const handleFinish = async (e: any): Promise<void> => {
 		const { email, password } = e
 		form.resetFields()
 		
 		try {
 			const { data } = await axios.post('http://localhost:5001/api/users/authUser', { email, password })
+			localStorage.setItem("accessToken", data.access_token)
+			setLoggedIn(true)
 			setSuccess(true)
 		} catch (e: any) {
 			setErrorDesc(e.response.data)
@@ -36,7 +41,7 @@ const SignIn: FC = (): JSX.Element => {
 				}
 				{ error && <Alert
 						message="Login Error"
-						description={errorDesc}
+						description={ errorDesc }
 						type="error"
 						showIcon
 						style={ { width: "50%" } }
@@ -57,7 +62,7 @@ const SignIn: FC = (): JSX.Element => {
 						] }
 						hasFeedback
 					>
-						<Input placeholder="Enter Your Email" />
+						<Input placeholder="Enter Your Email"/>
 					</Form.Item>
 					
 					<Form.Item
