@@ -32,11 +32,24 @@ const Navbar: FC = (): JSX.Element => {
 	const [ user, setUser ] = useState<UserType>(emptyUser)
 	
 	useEffect(() => {
-		const email = localStorage.getItem('userEmail')
-		const token = localStorage.getItem('accessToken')
-		if(email && token) {
-			setLoggedIn(true)
+		async function validateUser() {
+			const email = localStorage.getItem('userEmail')
+			const token = localStorage.getItem('accessToken')
+			try {
+				
+				const { data } = await axios.get('http://localhost:5001/api/users/validate', {
+					headers: {
+						Authorization: `Bearer ${ token }`
+					}
+				})
+				if (email && token && data.statusCode===200) {
+					setLoggedIn(true)
+				}
+			} catch(e: any) {
+				console.error(e.message)
+			}
 		}
+		validateUser()
 	}, [])
 	
 	useEffect(() => {
