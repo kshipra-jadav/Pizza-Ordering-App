@@ -39,6 +39,12 @@ export class UsersController {
 	}
 	
 	@UseGuards(JwtAuthGuard)
+	@Get('/validate')
+	async validateToken() {
+		return {statusCode: HttpStatus.OK}
+	}
+	
+	@UseGuards(JwtAuthGuard)
 	@Get('/:email')
 	async getUserByEmail(@Param('email') email: string) {
 		const user = await this.userService.findByEmail(email)
