@@ -1,5 +1,5 @@
 import { FC, useState, MouseEvent, MouseEventHandler, useEffect, useContext } from "react"
-import axios from "axios"
+import axios, { AxiosResponse } from "axios"
 
 import "./navbar.styles.css"
 import logo from "../assets/logo.png"
@@ -9,21 +9,60 @@ import { Button, Dropdown, Menu } from "antd"
 import { Link } from "react-router-dom"
 import UserContext from "../UserContext"
 
+type UserType = {
+	fullName: string
+	email: string
+	address: string
+	phoneNumber: string
+	imgUrl: string
+}
+
 const Navbar: FC = (): JSX.Element => {
+	const emptyUser: UserType = {
+		fullName: "",
+		email: "",
+		address: "",
+		phoneNumber: "",
+		imgUrl: ""
+	}
 	const [ menuItems, setMenuItems ] = useState<any>([]) // sorry :P
 	
 	const { loggedIn, setLoggedIn }: any = useContext(UserContext)
 	
-	if(loggedIn) {
+	const [ user, setUser ] = useState<UserType>(emptyUser)
 	
-	}
+	useEffect(() => {
+		const email = localStorage.getItem('userEmail')
+		const token = localStorage.getItem('accessToken')
+		if(email && token) {
+			setLoggedIn(true)
+		}
+	}, [])
+	
+	useEffect(() => {
+		if (loggedIn) {
+			// @ts-ignore // sorry :P
+			async function setNavbar() {
+				const email = localStorage.getItem('userEmail')
+				const token = localStorage.getItem('accessToken')
+				const {data} = await axios.get(`http://localhost:5001/api/users/${email}`, {
+					headers: {
+						Authorization: `Bearer ${token}`
+					}
+				})
+				setUser(data)
+			}
+			
+			setNavbar()
+		}
+	}, [ loggedIn ])
 	
 	// TODO - Add Type Declaration
 	const loggedInItems: any = [
 		{
 			key: '1',
 			label: (
-				"Kshipra Jadav"
+				user.fullName
 			),
 			disabled: true
 		},
@@ -33,27 +72,15 @@ const Navbar: FC = (): JSX.Element => {
 		{
 			key: '2',
 			label: (
-				<a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-					Your Account
-				</a>
+				<Link to={'/cart'}>Your Cart</Link>
 			),
 		},
 		{
 			type: "divider"
 		},
+		
 		{
 			key: '3',
-			label: (
-				<a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
-					Your Cart
-				</a>
-			),
-		},
-		{
-			type: "divider"
-		},
-		{
-			key: '4',
 			label: (
 				<a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
 					Previous Orders
@@ -64,9 +91,18 @@ const Navbar: FC = (): JSX.Element => {
 			type: "divider"
 		},
 		{
+			key: '4',
+			label: (
+				<Link to={ '/pizzas' }> Order Pizza! </Link>
+			),
+		},
+		{
+			type: "divider"
+		},
+		{
 			key: '5',
 			label: (
-				<Link to={'/pizzas'} > Order Pizza! </Link>
+				"Sign Out"
 			),
 		},
 	]
@@ -94,15 +130,14 @@ const Navbar: FC = (): JSX.Element => {
 		}
 	]
 	
-	
 	const menu = (
 		<Menu
-			items={loggedIn ? loggedInItems : loggedOutItems}
-			style={{
+			items={ loggedIn ? loggedInItems : loggedOutItems }
+			style={ {
 				width: "300px",
 				height: "200px",
 				textAlign: "center"
-			}}
+			} }
 		/>
 	)
 	
@@ -115,13 +150,13 @@ const Navbar: FC = (): JSX.Element => {
 				</div>
 				<div className="profile">
 					<div className="pic">
-						<Dropdown overlay={ menu } placement="bottomLeft" arrow trigger={['click']} >
-							<img src={ loggedIn ? dp : empty } alt="" className="profilepic"/>
+						<Dropdown overlay={ menu } placement="bottomLeft" arrow trigger={ [ 'click' ] }>
+							<img src={ loggedIn ? user.imgUrl : empty } alt="" className="profilepic"/>
 						</Dropdown>
 					</div>
 				</div>
 			</div>
-			
+		
 		</>
 	)
 }

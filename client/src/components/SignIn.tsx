@@ -19,6 +19,7 @@ const SignIn: FC = (): JSX.Element => {
 		try {
 			const { data } = await axios.post('http://localhost:5001/api/users/authUser', { email, password })
 			localStorage.setItem("accessToken", data.access_token)
+			localStorage.setItem("userEmail", email)
 			setLoggedIn(true)
 			setSuccess(true)
 		} catch (e: any) {
