@@ -21,12 +21,14 @@ function App() {
 			{/*// TODO - Add type declaration*/ }
 			<UserContext.Provider value={ { loggedIn, setLoggedIn } as any }>
 				<Navbar/>
-				<Routes>
-					<Route path={ "/" } element={ <> <h1>Hello</h1></> }/>
-					<Route path={ "/pizzas" } element={ <Pizzas/> }/>
-					<Route path={ "/signIn" } element={ <SignIn/> }/>
-					<Route path={ "/signUp" } element={ <SignUp/> }/>
-				</Routes>
+				<div style={{backgroundColor: "#fefae0"}}>
+					<Routes>
+						<Route path={ "/" } element={ <> <h1>Hello</h1></> }/>
+						<Route path={ "/pizzas" } element={ <Pizzas/> }/>
+						<Route path={ "/signIn" } element={ <SignIn/> }/>
+						<Route path={ "/signUp" } element={ <SignUp/> }/>
+					</Routes>
+				</div>
 			</UserContext.Provider>
 		</>
 	)

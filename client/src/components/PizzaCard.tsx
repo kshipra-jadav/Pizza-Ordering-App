@@ -1,5 +1,5 @@
-import { FC, useEffect, useState, MouseEvent } from "react"
-import { Button, Card, Checkbox, Col, Dropdown, Menu, MenuProps } from "antd"
+import { FC, useEffect, useState, MouseEvent, useContext } from "react"
+import { Button, Card, Checkbox, Col, Dropdown, Menu, MenuProps, message, Space } from "antd"
 import 'antd/dist/antd.css'
 import { ShoppingCartOutlined } from "@ant-design/icons"
 import Select, { Options } from "react-select"
@@ -9,8 +9,10 @@ import { Pizza } from "../types/Pizza"
 import "./pizzacard.styles.css"
 import veg from "../assets/veg.jpg"
 import non_veg from "../assets/non veg.png"
+import error from '../assets/error.png'
 import { Ingredient } from "../types/Ingredient"
 import { Topping } from "../types/Topping"
+import UserContext from "../UserContext"
 
 interface PizzaCardProps {
 	item: Pizza
@@ -23,12 +25,17 @@ const PizzaCard: FC<PizzaCardProps> = ({ item, ingredients }): JSX.Element => {
 	const [ toppings, setToppings ] = useState<Topping[]>([])
 	const [ pizza, setPizza ] = useState("")
 	
+	const { loggedIn, setLoggedIn }: any = useContext(UserContext)
+	
+	const errorConfig = {
+		content: <h1>You Should Be Logged In To Add Your Pizza To Cart!</h1>,
+		icon: <img src={ error } alt={""} width={"60px"} height={"60px"} />,
+	}
 	
 	useEffect(() => {
 		setPrice(item.price)
 		setPizza(item.name)
 	}, [])
-	
 	
 	
 	const handleSelect = (option: any) => {
@@ -43,15 +50,20 @@ const PizzaCard: FC<PizzaCardProps> = ({ item, ingredients }): JSX.Element => {
 	}
 	
 	const addToCart = (e: MouseEvent<HTMLButtonElement>) => {
-		console.log(`Pizza Taken :- ${pizza}`)
-		console.log(`Toppings Total :- ${total}`)
-		console.log(`Ingredients :- ${JSON.stringify(toppings)}`)
-		console.log(`Total Prize of Pizza :- ${price + total}`)
+		if(loggedIn) {
+			console.log(`Pizza Taken :- ${ pizza }`)
+			console.log(`Toppings Total :- ${ total }`)
+			console.log(`Ingredients :- ${ JSON.stringify(toppings) }`)
+			console.log(`Total Prize of Pizza :- ${ price + total }`)
+		} else {
+			message.error(errorConfig)
+		}
 		
 	}
 	
 	return (
 		<>
+			
 			<Col className={ "gutter-row" } span={ 8 } style={ {
 				display: "flex",
 				alignItems: "center",

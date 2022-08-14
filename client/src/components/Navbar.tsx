@@ -57,6 +57,12 @@ const Navbar: FC = (): JSX.Element => {
 		}
 	}, [ loggedIn ])
 	
+	const handleSignOut = () => {
+		localStorage.removeItem('userEmail')
+		localStorage.removeItem('accessToken')
+		setLoggedIn(false)
+	}
+	
 	// TODO - Add Type Declaration
 	const loggedInItems: any = [
 		{
@@ -102,7 +108,7 @@ const Navbar: FC = (): JSX.Element => {
 		{
 			key: '5',
 			label: (
-				"Sign Out"
+				<div onClick = {handleSignOut}>Sign Out</div>
 			),
 		},
 	]
