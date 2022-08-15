@@ -30,27 +30,25 @@ const Orders: FC = (): JSX.Element => {
 		getOrders()
 	}, [])
 	
-	const onChange = (key: string | string[]): void => {
-	}
-	
-	const text = "Hello"
 	if (orders.length) {
 		const parsedArray = orders.map(order => JSON.parse(order.pizza_price))
 		parsedArray.map(arr => console.log(arr))
 	}
+	let total = 0
 	return (
 		<>
 			<div className="orderTitle">
 				My Orders
 			</div>
 			<div className="mainOrderContainer">
-				<Collapse defaultActiveKey={ [ '1' ] } onChange={ onChange } accordion={ true }>
+				<Collapse defaultActiveKey={ [ '1' ] } accordion={ true }>
 					{
 						orders.map(order => {
+							total++
 							return (
 								<Panel
-									key={ order.id }
-									header={ `Pizza Order #${ order.id }` }
+									key={ total }
+									header={ `Pizza Order #${ total }` }
 									className={ "orderPanel" }
 								>
 									<ol>
