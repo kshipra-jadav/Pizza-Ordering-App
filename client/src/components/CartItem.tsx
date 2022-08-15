@@ -11,11 +11,13 @@ const CartItem: FC<CartItemProps> = ( { item } : CartItemProps): JSX.Element => 
 	return (
 		<>
 			<div className="itemName">
-				{item.pizza}
+				{
+					`${ item.pizza } - ${item.pizzaPrice - item.ingredientsPrice} ₹`
+				}
 			</div>
 			<div className="addons">
 				{
-					finalIngredients
+					finalIngredients ? `${ finalIngredients } - ${item.ingredientsPrice} ₹` : `${item.ingredientsPrice} ₹`
 				}
 			</div>
 			<div className="itemPrice">

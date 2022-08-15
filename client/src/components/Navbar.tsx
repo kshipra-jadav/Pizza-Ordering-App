@@ -6,7 +6,7 @@ import logo from "../assets/logo.png"
 import dp from "../assets/dp but jpeg.jpg"
 import empty from "../assets/empty.webp"
 import { Button, Dropdown, Menu } from "antd"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import UserContext from "../UserContext"
 
 type UserType = {
@@ -30,6 +30,8 @@ const Navbar: FC = (): JSX.Element => {
 	const { loggedIn, setLoggedIn }: any = useContext(UserContext)
 	
 	const [ user, setUser ] = useState<UserType>(emptyUser)
+	
+	const navigate = useNavigate()
 	
 	useEffect(() => {
 		async function validateUser() {
@@ -74,6 +76,7 @@ const Navbar: FC = (): JSX.Element => {
 		localStorage.removeItem('userEmail')
 		localStorage.removeItem('accessToken')
 		setLoggedIn(false)
+		navigate('/pizzas')
 	}
 	
 	// TODO - Add Type Declaration

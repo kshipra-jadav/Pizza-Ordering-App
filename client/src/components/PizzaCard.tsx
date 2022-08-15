@@ -66,7 +66,7 @@ const PizzaCard: FC<PizzaCardProps> = ({ item, ingredients }): JSX.Element => {
 				"ingredientsPrice" : total
 			}
 			
-			const response = await axios.post(`http://localhost:5001/api/cart/create`, postData)
+			const response = await axios.post(`http://localhost:5001/api/cart/create`, postData, headerConfig)
 			console.log(response)
 			
 			console.log(`Pizza Taken :- ${ pizza }`)
