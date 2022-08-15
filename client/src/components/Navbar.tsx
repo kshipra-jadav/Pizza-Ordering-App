@@ -89,6 +89,12 @@ const Navbar: FC = (): JSX.Element => {
 			disabled: true
 		},
 		{
+			key: '4',
+			label: (
+				<Link to={ '/pizzas' }> Order Pizza! </Link>
+			),
+		},
+		{
 			type: "divider"
 		},
 		{
@@ -107,15 +113,6 @@ const Navbar: FC = (): JSX.Element => {
 				<Link to={'/orders'}>
 					Previous Orders
 				</Link>
-			),
-		},
-		{
-			type: "divider"
-		},
-		{
-			key: '4',
-			label: (
-				<Link to={ '/pizzas' }> Order Pizza! </Link>
 			),
 		},
 		{

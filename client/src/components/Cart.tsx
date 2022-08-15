@@ -5,11 +5,19 @@ import "./cart.styles.css"
 import CartItem from "./CartItem"
 import CartItemType from "../types/CartItemType"
 import { Pizza_Price } from "../types/Pizza_Price"
+import { message } from "antd"
+import success from "../assets/success.png"
 
 const Cart: FC = (): JSX.Element => {
 	const [ price, setPrice ] = useState(0)
 	const [ serverResponse, setServerResponse ] = useState<CartItemType[]>([])
 	const [ userId, setUserId ] = useState(0)
+	
+	const successConfig = {
+		content: <h1>Order Successfully Placed!</h1>,
+		icon: <img src={ success } alt={ "" } width={ "60px" } height={ "60px" }/>
+	}
+	
 	useEffect(() => {
 		async function getCartItems() {
 			const token = localStorage.getItem("accessToken")
@@ -36,10 +44,9 @@ const Cart: FC = (): JSX.Element => {
 		setPrice(total)
 	}, [ serverResponse ])
 	
-	console.log(!!serverResponse.length)
 	
 	const handleCheckout = async () => {
-		if(!serverResponse.length) return
+		if (!serverResponse.length) return
 		const pizza_price: Pizza_Price[] = []
 		serverResponse.forEach(res => {
 			const obj = {
@@ -52,10 +59,16 @@ const Cart: FC = (): JSX.Element => {
 			"UserId": userId,
 			"pizza_price": JSON.stringify(pizza_price)
 		}
-		const token = localStorage.getItem('userToken')
+		const token = localStorage.getItem('accessToken')
 		const headerConfig = { headers: { Authorization: `Bearer ${ token }` } }
-		await axios.post('http://localhost:5001/api/orders/create', orderItem, headerConfig)
-		await axios.delete(`http://localhost:5001/api/cart/${userId}`, headerConfig)
+		try {
+			await axios.post('http://localhost:5001/api/orders/create', orderItem, headerConfig)
+			await axios.delete(`http://localhost:5001/api/cart/${ userId }`, headerConfig)
+			message.success(successConfig)
+			
+		} catch (e) {
+			console.log(e)
+		}
 		
 		setServerResponse([])
 	}

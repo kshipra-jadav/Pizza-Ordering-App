@@ -31,7 +31,6 @@ const Orders: FC = (): JSX.Element => {
 	}, [])
 	
 	const onChange = (key: string | string[]): void => {
-		console.log(key)
 	}
 	
 	const text = "Hello"

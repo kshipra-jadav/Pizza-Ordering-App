@@ -8,6 +8,7 @@ import SignIn from "./components/SignIn"
 import UserContext from './UserContext'
 import Cart from "./components/Cart"
 import Orders from "./components/Orders"
+import Home from "./components/Home"
 
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
 				<Navbar/>
 				<div style={{backgroundColor: "#fefae0"}}>
 					<Routes>
-						<Route path={ "/" } element={ <> <h1>Hello</h1></> }/>
+						<Route path={ "/" } element={ <Home /> }/>
 						<Route path={ "/pizzas" } element={ <Pizzas/> }/>
 						<Route path={ "/signIn" } element={ <SignIn/> }/>
 						<Route path={ "/signUp" } element={ <SignUp/> }/>
