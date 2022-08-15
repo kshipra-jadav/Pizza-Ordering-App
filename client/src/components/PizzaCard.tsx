@@ -49,8 +49,24 @@ const PizzaCard: FC<PizzaCardProps> = ({ item, ingredients }): JSX.Element => {
 		setToppings(finalToppings)
 	}
 	
-	const addToCart = (e: MouseEvent<HTMLButtonElement>) => {
+	const addToCart = async (e: MouseEvent<HTMLButtonElement>) => {
 		if(loggedIn) {
+			const token = localStorage.getItem("accessToken")
+			const email = localStorage.getItem('userEmail')
+			const headerConfig = { headers: { Authorization: `Bearer ${ token }` } }
+			
+			const { data } = await axios.get(`http://localhost:5001/api/users/id/${email}`, headerConfig)
+			const userId = await data.userId
+			
+			const postData = {
+				"UserId": userId,
+				"pizza": pizza,
+				"ingredients": JSON.stringify(toppings)
+			}
+			
+			const response = await axios.post(`http://localhost:5001/api/cart/create`, postData)
+			console.log(response)
+			
 			console.log(`Pizza Taken :- ${ pizza }`)
 			console.log(`Toppings Total :- ${ total }`)
 			console.log(`Ingredients :- ${ JSON.stringify(toppings) }`)
