@@ -19,7 +19,6 @@ export class CartService {
 	async getCartItemByUserId(id: number) {
 		return await this.repository.findAll({
 			where: {UserId: id},
-			include: [User]
 		})
 	}
 	
