@@ -7,6 +7,8 @@ export interface CartType {
 	user: UserType
 	pizza: string
 	ingredients: string
+	pizzaPrice: number
+	ingredientsPrice: number
 }
 
 @Table({ tableName: "Cart" })
@@ -29,5 +31,11 @@ export class Cart extends Model implements CartType {
 	
 	@Column
 	ingredients: string
+	
+	@Column
+	pizzaPrice: number
+	
+	@Column
+	ingredientsPrice: number
 	
 }
