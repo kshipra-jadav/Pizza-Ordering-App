@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common'
 import { Repository, Sequelize } from "sequelize-typescript"
 import { Cart } from "./cart.model"
 import { CartItemDto } from "./cartItem.dto"
@@ -18,7 +18,13 @@ export class CartService {
 	
 	async getCartItemByUserId(id: number) {
 		return await this.repository.findAll({
-			where: {UserId: id},
+			where: { UserId: id },
+		})
+	}
+	
+	async deleteCartItemsByUserId(id: number) {
+		return await this.repository.destroy({
+			where: { UserId: id }
 		})
 	}
 	
