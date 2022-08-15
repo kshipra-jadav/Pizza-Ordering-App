@@ -1,0 +1,19 @@
+.mainOrderContainer {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+}
+
+.orderPanel {
+    font-size: 2rem;
+
+}
+
+.orderTitle {
+    font-size: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 50px;
+}

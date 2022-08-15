@@ -7,6 +7,7 @@ import SignUp from "./components/SignUp"
 import SignIn from "./components/SignIn"
 import UserContext from './UserContext'
 import Cart from "./components/Cart"
+import Orders from "./components/Orders"
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
 						<Route path={ "/signIn" } element={ <SignIn/> }/>
 						<Route path={ "/signUp" } element={ <SignUp/> }/>
 						<Route path={"/cart"} element={<Cart />} />
+						<Route path={"/orders"} element={<Orders />} />
 					</Routes>
 				</div>
 			</UserContext.Provider>

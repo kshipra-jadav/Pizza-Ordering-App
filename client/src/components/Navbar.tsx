@@ -104,9 +104,9 @@ const Navbar: FC = (): JSX.Element => {
 		{
 			key: '3',
 			label: (
-				<a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
+				<Link to={'/orders'}>
 					Previous Orders
-				</a>
+				</Link>
 			),
 		},
 		{
