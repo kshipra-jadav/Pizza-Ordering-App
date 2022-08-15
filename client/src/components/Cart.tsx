@@ -4,10 +4,12 @@ import axios from "axios"
 import "./cart.styles.css"
 import CartItem from "./CartItem"
 import CartItemType from "../types/CartItemType"
+import { Pizza_Price } from "../types/Pizza_Price"
 
 const Cart: FC = (): JSX.Element => {
 	const [ price, setPrice ] = useState(0)
 	const [ serverResponse, setServerResponse ] = useState<CartItemType[]>([])
+	const [ userId, setUserId ] = useState(0)
 	useEffect(() => {
 		async function getCartItems() {
 			const token = localStorage.getItem("accessToken")
@@ -16,7 +18,7 @@ const Cart: FC = (): JSX.Element => {
 			
 			const { data } = await axios.get(`http://localhost:5001/api/users/id/${ email }`, headerConfig)
 			const userId = await data.userId
-			
+			setUserId(userId)
 			const response = await axios.get(`http://localhost:5001/api/cart/${ userId }`, headerConfig)
 			setServerResponse(response.data)
 			
@@ -24,7 +26,6 @@ const Cart: FC = (): JSX.Element => {
 		
 		getCartItems()
 		
-		console.log(serverResponse)
 	}, [])
 	
 	useEffect(() => {
@@ -35,7 +36,27 @@ const Cart: FC = (): JSX.Element => {
 		setPrice(total)
 	}, [ serverResponse ])
 	
-	const handleCheckout = () => {
+	console.log(!!serverResponse.length)
+	
+	const handleCheckout = async () => {
+		if(!serverResponse.length) return
+		const pizza_price: Pizza_Price[] = []
+		serverResponse.forEach(res => {
+			const obj = {
+				"pizza": res.pizza,
+				"price": res.pizzaPrice
+			}
+			pizza_price.push(obj)
+		})
+		const orderItem = {
+			"UserId": userId,
+			"pizza_price": JSON.stringify(pizza_price)
+		}
+		const token = localStorage.getItem('userToken')
+		const headerConfig = { headers: { Authorization: `Bearer ${ token }` } }
+		await axios.post('http://localhost:5001/api/orders/create', orderItem)
+		await axios.delete(`http://localhost:5001/api/cart/${userId}`)
+		
 		setServerResponse([])
 	}
 	
