@@ -61,7 +61,9 @@ const PizzaCard: FC<PizzaCardProps> = ({ item, ingredients }): JSX.Element => {
 			const postData = {
 				"UserId": userId,
 				"pizza": pizza,
-				"ingredients": JSON.stringify(toppings)
+				"ingredients": JSON.stringify(toppings),
+				"pizzaPrice": (price + total),
+				"ingredientsPrice" : total
 			}
 			
 			const response = await axios.post(`http://localhost:5001/api/cart/create`, postData)
