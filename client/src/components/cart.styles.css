@@ -1,0 +1,65 @@
+.cartTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+}
+
+.pizzaContainer {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 572px 600px 300px;
+    grid-auto-rows: 100px;
+}
+
+.itemName {
+    border-bottom: 5px solid black;
+    border-right: 5px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+}
+
+.addons {
+    border-bottom: 5px solid black;
+    border-left: 5px solid black;
+    border-right: 5px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: gray;
+    font-size: 1.5rem;
+}
+
+.itemPrice {
+    border-bottom: 5px solid black;
+    border-left: 5px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.orderButton {
+    width: 80vw;
+    height: 60px;
+    background-color: green;
+    border-radius: 20px 20px;
+    display: flex;
+    flex-direction: row;
+    color: white;
+    font-size: 2rem;
+    gap: 400px;
+}

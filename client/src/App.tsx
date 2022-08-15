@@ -6,6 +6,7 @@ import { Route, Routes, useNavigate } from "react-router-dom"
 import SignUp from "./components/SignUp"
 import SignIn from "./components/SignIn"
 import UserContext from './UserContext'
+import Cart from "./components/Cart"
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
 						<Route path={ "/pizzas" } element={ <Pizzas/> }/>
 						<Route path={ "/signIn" } element={ <SignIn/> }/>
 						<Route path={ "/signUp" } element={ <SignUp/> }/>
+						<Route path={"/cart"} element={<Cart />} />
 					</Routes>
 				</div>
 			</UserContext.Provider>
