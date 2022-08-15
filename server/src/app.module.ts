@@ -5,6 +5,7 @@ import { PizzaModule } from './pizza/pizza.module'
 import { SequelizeModule } from "@nestjs/sequelize"
 import { IngredientsModule } from './ingredients/ingredients.module';
 import { UsersModule } from './users/users.module';
+import { CartModule } from './cart/cart.module';
 
 @Module({
 	imports: [ SequelizeModule.forRoot({
@@ -16,7 +17,7 @@ import { UsersModule } from './users/users.module';
 		database: 'pizzastore',
 		autoLoadModels: true,
 		synchronize: true,
-	}), PizzaModule, IngredientsModule, UsersModule ],
+	}), PizzaModule, IngredientsModule, UsersModule, CartModule ],
 	controllers: [ AppController ],
 	providers: [ AppService ],
 })

@@ -1,7 +1,18 @@
 import { Column, Model, PrimaryKey, Table } from "sequelize-typescript"
 
+
+export interface PizzaType {
+	id: number
+	name: string
+	veg: boolean
+	price: number
+	description: string
+	quantity: number
+	img: string
+}
+
 @Table
-export class Pizza extends Model {
+export class Pizza extends Model implements PizzaType {
 	@PrimaryKey
 	@Column
 	id: number
