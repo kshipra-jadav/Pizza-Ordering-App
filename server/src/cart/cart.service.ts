@@ -13,6 +13,7 @@ export class CartService {
 	}
 	
 	async createCartItem(cartItem: CartItemDto) {
+		// @ts-ignore
 		return await this.repository.create(cartItem)
 	}
 	

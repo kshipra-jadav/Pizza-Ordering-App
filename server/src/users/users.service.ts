@@ -19,6 +19,7 @@ export class UsersService {
 	}
 	
 	async createUser(user: User): Promise<User> {
+		// @ts-ignore
 		return await this.repository.create(user)
 		
 	}

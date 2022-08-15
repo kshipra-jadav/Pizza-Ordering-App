@@ -11,7 +11,7 @@ import { OrdersModule } from './orders/orders.module';
 @Module({
 	imports: [ SequelizeModule.forRoot({
 		dialect: 'postgres',
-		host: 'localhost',
+		host: 'host.docker.internal',
 		port: 5425,
 		username: 'postgres',
 		password: 'postgres',

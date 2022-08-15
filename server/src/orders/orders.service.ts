@@ -18,6 +18,7 @@ export class OrdersService {
 	}
 	
 	async createOrder(orderItem: OrderItemDto) {
+		// @ts-ignore
 		return await this.repository.create(orderItem)
 	}
 }

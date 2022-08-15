@@ -11,6 +11,7 @@ export class IngredientsService {
 	}
 	
 	async createOne(ingredient: IngredientType): Promise<Ingredients> {
+		// @ts-ignore
 		return await this.repository.create(ingredient)
 	}
 	async findAll(): Promise<Ingredients[]> {

@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3'
 
 services:
   db:
@@ -14,20 +14,30 @@ services:
     ports:
       - "5425:5432"
 
+    
+
   frontend:
-    build: ./client
+    build:
+      context: ./client
     container_name: frontend_app
     ports:
       - "3000:3000"
     volumes:
-      - ./client:/frontend_app
-      - ./frontend_app/node_modules
+      - ./client:/frontend
+      - ./frontend/node_modules
+
+    depends_on:
+      - db
 
   backend:
-    build: ./server
+    build:
+      context: ./server
     container_name: backend_app
     ports:
       - "5001:5001"
     volumes:
-      - ./server:/backend_app
-      - ./backend_app/node_modules
+      - ./server:/backend
+      - ./backend/node_modules
+    
+    depends_on:
+      - db
