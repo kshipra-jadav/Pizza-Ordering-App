@@ -27,6 +27,7 @@ export class CartController {
 		return await this.cartService.getCartItemByUserId(id)
 	}
 	
+	@UseGuards(JwtAuthGuard)
 	@Delete('/:id')
 	async deleteCartItemsByUserId(@Param('id', ParseIntPipe) id: number) {
 		return await this.cartService.deleteCartItemsByUserId(id)
