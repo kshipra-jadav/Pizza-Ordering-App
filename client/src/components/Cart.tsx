@@ -54,8 +54,8 @@ const Cart: FC = (): JSX.Element => {
 		}
 		const token = localStorage.getItem('userToken')
 		const headerConfig = { headers: { Authorization: `Bearer ${ token }` } }
-		await axios.post('http://localhost:5001/api/orders/create', orderItem)
-		await axios.delete(`http://localhost:5001/api/cart/${userId}`)
+		await axios.post('http://localhost:5001/api/orders/create', orderItem, headerConfig)
+		await axios.delete(`http://localhost:5001/api/cart/${userId}`, headerConfig)
 		
 		setServerResponse([])
 	}
